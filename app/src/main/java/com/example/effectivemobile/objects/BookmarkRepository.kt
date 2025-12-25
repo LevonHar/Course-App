@@ -1,4 +1,4 @@
-package com.example.effectivemobile.data
+package com.example.effectivemobile.objects
 
 import android.content.Context
 import android.content.SharedPreferences

@@ -38,6 +38,28 @@ class UserActivity : AppCompatActivity() {
             }
             true
         }
+        supportFragmentManager.beginTransaction()
+            .replace(binding.frameLayout.id, HomeFragment())
+            .commit()
+
+        // Listen for back stack changes
+        supportFragmentManager.addOnBackStackChangedListener {
+            // Show bottom nav only if the top fragment is NOT CourseFragment
+            val topFragment = supportFragmentManager.fragments.lastOrNull()
+            if (topFragment is com.example.effectivemobile.fragments.CourseFragment) {
+                hideBottomNavigation()
+            } else {
+                showBottomNavigation()
+            }
+        }
+    }
+
+    fun hideBottomNavigation() {
+        binding.bottomNavigationView.visibility = android.view.View.GONE
+    }
+
+    fun showBottomNavigation() {
+        binding.bottomNavigationView.visibility = android.view.View.VISIBLE
     }
 
     private fun replaceFragment(fragment: Fragment) {

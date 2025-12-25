@@ -1,8 +1,9 @@
 package com.example.effectivemobile.model
 
-import android.app.Application
-import com.example.effectivemobile.data.BookmarkRepository
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Course(
     val id: Long,              // идентификатор курса
     val title: String,          // заголовок курса
@@ -12,4 +13,4 @@ data class Course(
     val startDate: String,      // дата начала курса
     val publishDate: String,    // дата публикации курса
     val hasLike: Boolean        // добавлен ли в избранное
-)
+) : Parcelable

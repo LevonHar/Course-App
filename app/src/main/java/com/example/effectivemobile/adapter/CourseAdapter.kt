@@ -2,14 +2,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.effectivemobile.R
-import com.example.effectivemobile.data.BookmarkRepository
+import com.example.effectivemobile.objects.BookmarkRepository
 import com.example.effectivemobile.databinding.ItemBinding
 import com.example.effectivemobile.model.Course
 
 class CourseAdapter(
     private val list: List<Course>,
     private val onBookmarkClick: (Course) -> Unit,
-    private val bookmarkIconRes: Int = R.drawable.bookmark_green // green icon
+    private val onItemClick: (Course) -> Unit, // NEW
+    private val bookmarkIconRes: Int = R.drawable.bookmark_green
 ) : RecyclerView.Adapter<CourseAdapter.CourseViewHolder>() {
 
     inner class CourseViewHolder(val binding: ItemBinding) : RecyclerView.ViewHolder(binding.root)
@@ -28,25 +29,29 @@ class CourseAdapter(
             rateText.text = item.rate.toString()
             dateText.text = item.startDate
 
-            // Update icon based on bookmark state
+            // Bookmark icon
             fun updateIcon() {
                 saveIcon.setImageResource(
                     if (BookmarkRepository.isBookmarked(item)) bookmarkIconRes
                     else R.drawable.bookmark_icon
                 )
             }
-
-            updateIcon() // initial state
+            updateIcon()
 
             saveIcon.setOnClickListener {
-                onBookmarkClick(item)       // toggle in repository
-                updateIcon()                // immediately update icon
+                onBookmarkClick(item)
+                updateIcon()
+            }
+
+            root.setOnClickListener {
+                onItemClick(item) // open CourseFragment
             }
         }
     }
 
     override fun getItemCount(): Int = list.size
 }
+
 
 
 
